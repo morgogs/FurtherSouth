@@ -8,10 +8,12 @@ interface Props {
 }
 
 // Markdown pages pass frontmatter via `Astro.props.frontmatter`, while
-// Astro pages provide props directly. Support both by normalizing the
-// source of our values.
-const props = (Astro.props.frontmatter ?? Astro.props) as Props;
-const { title, heading = title, description } = props;
+// Astro pages provide props directly. Handle both cases with a type guard
+// so we don't mix property access and lose type safety.
+type AstroProps = Props | { frontmatter: Props };
+const raw = Astro.props as AstroProps;
+const { title, heading = title, description } =
+  'frontmatter' in raw ? raw.frontmatter : raw;
 ---
 <Layout title={title ?? heading}>
   <article class="prose mx-auto">
