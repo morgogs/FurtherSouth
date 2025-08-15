@@ -1,11 +1,17 @@
 ---
 import Layout from './Layout.astro';
+
 interface Props {
   title?: string; // document title
   heading?: string; // visible page heading
   description?: string;
 }
-const { title, heading = title, description } = Astro.props as Props;
+
+// Markdown pages pass frontmatter via `Astro.props.frontmatter`, while
+// Astro pages provide props directly. Support both by normalizing the
+// source of our values.
+const props = (Astro.props.frontmatter ?? Astro.props) as Props;
+const { title, heading = title, description } = props;
 ---
 <Layout title={title ?? heading}>
   <article class="prose mx-auto">
