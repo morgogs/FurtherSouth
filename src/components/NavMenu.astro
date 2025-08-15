@@ -1,19 +1,20 @@
 ---
-// Builds a dropdown list of links from files in /src/pages/activities/**.
-// Usage: <ActivitiesMenu label="Activities" />
+// Generic dropdown navigation menu built from files in a folder.
+// Usage: <NavMenu label="Activities" folder="activities" />
 interface Item { url: string; label: string }
-
-const { label = 'Activities' } = Astro.props as { label?: string };
-
-// Eagerly import all activity pages; works for .astro, .md, .mdx
-const modules = import.meta.glob('../pages/activities/**/*.{astro,md,mdx}', { eager: true });
-
-const startCase = (s: string) => s
-  .replace(/[-_]/g, ' ')
-  .split(' ')
-  .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
-  .join(' ');
-
+const { label, folder } = Astro.props as { label: string; folder: string };
+// Preload modules for each supported folder. Add new entries as folders grow.
+const modulesMap = {
+  activities: import.meta.glob('../pages/activities/**/*.{astro,md,mdx}', { eager: true }),
+  'about-us': import.meta.glob('../pages/about-us/**/*.{astro,md,mdx}', { eager: true }),
+} as Record<string, any>;
+const modules = modulesMap[folder] ?? {};
+const startCase = (s: string) =>
+  s
+    .replace(/[-_]/g, ' ')
+    .split(' ')
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(' ');
 function toRoute(file: string) {
   let p = file;
   const idx = p.lastIndexOf('/pages');
@@ -23,24 +24,22 @@ function toRoute(file: string) {
   if (p.endsWith('/index')) p = p.slice(0, -('/index'.length)) + '/';
   return p;
 }
-
 const toLabelFromRoute = (route: string) => {
   const parts = route.split('/').filter(Boolean);
-  const last = parts[parts.length - 1] ?? 'Activities';
+  const last = parts[parts.length - 1] ?? folder;
   return startCase(last);
 };
-
 const items: Item[] = Object.entries(modules)
   .map(([file, mod]: any) => {
     const url = toRoute(file);
     const label = mod?.frontmatter?.title || mod?.title || toLabelFromRoute(url);
     return { url, label } as Item;
   })
-  // hide the top-level /activities/ index in the dropdown (optional)
-  .filter((it) => it.url !== '/activities/')
+  // hide the folder index page in the dropdown
+  .filter((it) => it.url !== `/${folder}/`)
   .sort((a, b) => a.label.localeCompare(b.label));
 ---
-<nav class="relative" aria-label="Activities">
+<nav class="relative" aria-label={label}>
   <details class="group inline-block relative">
     <summary class="flex items-center gap-1 list-none cursor-pointer select-none px-3 py-2 border border-ink rounded-md font-semibold bg-white hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand">
       {label}
@@ -53,7 +52,7 @@ const items: Item[] = Object.entries(modules)
         <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </summary>
-    <ul class="absolute right-0 mt-2 p-2 border border-soft bg-white rounded-xl min-w-[14rem] shadow-lg z-10">
+    <ul class="absolute right-0 mt-2 p-2 border border-soft bg-white rounded-xl min-w-[14rem] shadow-lg z-20">
       {items.map((it) => (
         <li class="list-none">
           <a

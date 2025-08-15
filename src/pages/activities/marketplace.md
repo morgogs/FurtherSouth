@@ -1,9 +1,6 @@
 ---
-layout: ../../layouts/ContentPage.astro
+layout: ../../layouts/Layout.astro
 title: Marketplace
-description: Dealers Den & Art Show information for Further South.
-heroImage: /images/marketplace-hero.jpg
-updated: 2025-08-15
 ---
 
 # The Marketplace
