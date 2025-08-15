@@ -9,8 +9,7 @@ const { label = 'Activities' } = Astro.props as { label?: string };
 const modules = import.meta.glob('../pages/activities/**/*.{astro,md,mdx}', { eager: true });
 
 const startCase = (s: string) => s
-  .split('-').join(' ')
-  .split('_').join(' ')
+  .replace(/[-_]/g, ' ')
   .split(' ')
   .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
   .join(' ');
@@ -41,37 +40,15 @@ const items: Item[] = Object.entries(modules)
   .filter((it) => it.url !== '/activities/')
   .sort((a, b) => a.label.localeCompare(b.label));
 ---
-<nav class="nav-activities" aria-label="Activities">
-  <details>
-    <summary>{label}</summary>
-    <ul>
+<nav class="relative" aria-label="Activities">
+  <details class="inline-block relative">
+    <summary class="list-none cursor-pointer select-none px-3 py-2 border border-ink rounded-md font-semibold">
+      {label}
+    </summary>
+    <ul class="absolute right-0 mt-2 p-2 border border-soft bg-white rounded-xl min-w-[14rem] shadow-lg z-10">
       {items.map((it) => (
-        <li><a href={it.url}>{it.label}</a></li>
+        <li class="list-none"><a class="block px-2 py-2 no-underline text-inherit rounded-md hover:bg-blue-50 focus:bg-blue-50 outline-none" href={it.url}>{it.label}</a></li>
       ))}
     </ul>
   </details>
-  <style>
-    .nav-activities { position: relative; }
-    .nav-activities details { display: inline-block; position: relative; }
-    .nav-activities summary { list-style: none; cursor: pointer; user-select: none; }
-    .nav-activities summary::-webkit-details-marker { display: none; }
-
-    /* Button look */
-    .nav-activities summary { padding: .5rem .75rem; border: 1px solid #0b1220; border-radius: .5rem; font-weight: 600; }
-
-    /* Menu */
-    .nav-activities ul { position: absolute; margin: .5rem 0 0; padding: .5rem; border: 1px solid #e5e8f0; background: #fff; border-radius: .75rem; min-width: 14rem; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-    .nav-activities li { list-style: none; }
-    .nav-activities a { display: block; padding: .5rem .5rem; text-decoration: none; color: inherit; border-radius: .5rem; }
-    .nav-activities a:hover, .nav-activities a:focus { background: #f4f7ff; outline: none; }
-
-    /* Keep menu within viewport */
-    .nav-activities details { position: relative; }
-    .nav-activities details[open] > ul { right: 0; z-index: 10; }
-
-    @media (pointer: fine) {
-      /* Optional: open on hover/focus for desktop */
-      .nav-activities details:hover[open] > summary { }
-    }
-  </style>
 </nav>

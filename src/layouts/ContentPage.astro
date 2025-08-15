@@ -1,12 +1,11 @@
 ---
-// Generic site-wide layout that uses a reusable <Hero/> banner.
-// Works for ALL pages – it reads page frontmatter (when used as an MD(X) layout)
-// and falls back to site-wide defaults from src/data/site.ts.
+// Generic site-wide layout that uses a reusable <Banner/>.
+// Works for pages and reads frontmatter for defaults.
+import Layout from './Layout.astro';
 import Banner from '../components/Banner.astro';
 import { site } from '../data/site';
 
 const {
-  // Page-level props (usually from MD/MDX frontmatter)
   title = site.name,
   description = site.description,
   heroImage = '',
@@ -14,63 +13,35 @@ const {
   bannerEyebrow = site.eyebrow ?? site.name,
   cta,
   updated,
-  // Optional controls
-  heroVariant = 'default',   // 'default' | 'home' | 'compact'
-  heroAlign = 'left',        // 'left' | 'center'
+  heroVariant = 'default',
+  heroAlign = 'left',
   hideHero = false,
 } = Astro.props;
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} — {site.name}</title>
-    <meta name="description" content={description} />
-    {Astro.site && (
-      <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-    )}
-    <style>
-      :root { --wrap: 72rem; --soft: #eef1f7; }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; }
-      body { font-family: system-ui,-apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial; line-height: 1.6; }
-      a { color: inherit; }
-      .skip { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
-      .skip:focus { position: static; width: auto; height: auto; padding: .5rem 1rem; background: #ffd; display: inline-block; }
-      main { padding: 2rem 0 4rem; }
-      article { max-width: var(--wrap); margin: 0 auto; padding: 0 1rem; }
-      article :is(h2,h3,h4) { scroll-margin-top: 6rem; }
-      article h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); margin-top: 2rem; }
-      article h3 { font-size: clamp(1.1rem, 2vw, 1.25rem); margin-top: 1.5rem; }
-      article p, article li { max-width: 75ch; }
-      footer.site { padding: 2rem 1rem; border-top: 1px solid var(--soft); color: #5b657a; }
-    </style>
-  </head>
-  <body>
-    <a class="skip" href="#main">Skip to content</a>
+<Layout>
+  <a class="sr-only focus:not-sr-only focus:p-2 focus:bg-yellow-100" href="#main">Skip to content</a>
 
-    {!hideHero && (
-      <Banner
-        title={title}
-        eyebrow={bannerEyebrow}
-        description={description}
-        logo={bannerLogo}
-        heroImage={heroImage}
-        updated={updated}
-        cta={cta}
-        variant={heroVariant}
-        align={heroAlign}
-      />
-    )}
+  {!hideHero && (
+    <Banner
+      title={title}
+      eyebrow={bannerEyebrow}
+      description={description}
+      logo={bannerLogo}
+      heroImage={heroImage}
+      updated={updated}
+      cta={cta}
+      variant={heroVariant}
+      align={heroAlign}
+    />
+  )}
 
-    <main id="main">
-      <article>
-        <slot />
-      </article>
-    </main>
+  <main id="main" class="py-8 md:py-16">
+    <article class="max-w-[72rem] mx-auto px-4">
+      <slot />
+    </article>
+  </main>
 
-    <footer class="site">
-      <div class="wrap" style="max-width: var(--wrap); margin: 0 auto;">© {new Date().getFullYear()} {site.name}</div>
-    </footer>
-  </body>
-</html>
+  <footer class="border-t border-soft text-muted py-8 px-4">
+    <div class="max-w-[72rem] mx-auto">© {new Date().getFullYear()} {site.name}</div>
+  </footer>
+</Layout>

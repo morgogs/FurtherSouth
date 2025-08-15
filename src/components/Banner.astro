@@ -16,64 +16,37 @@ const {
   variant = 'default',
   align = 'left',
 } = Astro.props;
+
+const padding = {
+  home: 'py-24 px-4 pb-16',
+  compact: 'py-9 px-4',
+  default: 'py-16 px-4 pb-14',
+}[variant];
+
+const alignment = align === 'center' ? 'text-center justify-items-center' : 'text-left';
 ---
-<header class={['hero', `v-${variant}`, `a-${align}`].join(' ')} style={heroImage ? { '--hero-image': `url(${heroImage})` } : undefined}>
-  <div class="wrap">
-    {logo && <img class="logo" src={logo} alt={site.name + ' logo'} width="96" height="96" loading="eager" />}
+<header class={`relative overflow-hidden isolate border-b border-soft bg-gradient-to-b from-bg-top to-bg-mid ${padding} ${alignment}`} style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+  <div class="max-w-[72rem] mx-auto grid gap-4 justify-items-start">
+    {logo && <img class="w-[clamp(72px,10vw,96px)] h-auto rounded-full shadow-lg bg-white" src={logo} alt={site.name + ' logo'} width="96" height="96" loading="eager" />}
     <div>
-      {eyebrow && <div class="eyebrow">{eyebrow}</div>}
-      <h1><span class="title-underline">{title}</span></h1>
-      {description && <p class="desc">{description}</p>}
-      <div class="cta-row">
+      {eyebrow && <div class="uppercase tracking-widest text-[0.8rem] text-muted">{eyebrow}</div>}
+      <h1 class="mt-1 text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15]"><span class="bg-left-bottom bg-no-repeat" style="background-image:linear-gradient(currentColor,currentColor); background-size:100% 3px;">{title}</span></h1>
+      {description && <p class="mt-2 text-[#2f3a52] max-w-[60ch]">{description}</p>}
+      <div class="flex flex-wrap items-center gap-3 mt-4">
         {cta?.url && cta?.label && (
-          <a class="btn primary" href={cta.url}>{cta.label}</a>
+          <a class="inline-block px-4 py-2 rounded-xl border border-ink font-semibold bg-ink text-white" href={cta.url}>{cta.label}</a>
         )}
         {updated && (
-          <span class="meta">Last updated: {new Date(updated).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' })}</span>
+          <span class="mt-2 text-muted text-sm">Last updated: {new Date(updated).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' })}</span>
         )}
       </div>
-      <!-- Activities dropdown injected under the banner copy -->
-      <div class="menu-row">
+      <div class="mt-4">
         <ActivitiesMenu label="Activities" />
       </div>
     </div>
   </div>
 
-  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+  <svg class="absolute left-0 right-0 bottom-[-1px] h-[60px] -z-10" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0,64 C240,128 480,0 720,48 C960,96 1200,80 1440,32 L1440,120 L0,120 Z" fill="#fff" />
   </svg>
-
-  <style>
-    :root {
-      --ink: #0b1220; --muted: #5b657a; --soft: #eef1f7; --brand: #1e6bff;
-      --bg-top: #f4f9ff; --bg-mid: #ffffff; --wrap: 72rem;
-    }
-    .hero { position: relative; padding: 4rem 1rem 3.5rem; border-bottom: 1px solid var(--soft); isolation: isolate; }
-    .hero { background: radial-gradient(1200px 400px at 50% 0%, var(--bg-top), var(--bg-mid)); overflow: clip; }
-    .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--hero-image, none); background-size: cover; background-position: center; opacity: var(--bg-opacity, .18); }
-    .hero .wrap { max-width: var(--wrap); margin: 0 auto; display: grid; gap: 1rem; justify-items: start; }
-    .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; color: var(--muted); }
-    h1 { margin: .25rem 0 0; font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; }
-    .title-underline { display: inline; background: linear-gradient(currentColor, currentColor) left bottom/100% 3px no-repeat; text-decoration: none; }
-    .desc { margin-top: .5rem; color: #2f3a52; max-width: 60ch; }
-    .meta { margin-top: .5rem; color: var(--muted); font-size: .9rem; }
-    .cta-row { margin-top: 1rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
-    .btn { display: inline-block; padding: .65rem 1rem; border-radius: .75rem; border: 1px solid var(--ink); text-decoration: none; font-weight: 600; }
-    .btn.primary { background: var(--ink); color: #fff; }
-    .logo { width: clamp(72px, 10vw, 96px); height: auto; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.08); background: #fff; }
-    .wave { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; z-index: -1; }
-
-    .menu-row { margin-top: 1rem; }
-
-    /* Variants */
-    .v-home { padding: 6rem 1rem 4rem; }
-    .v-compact { padding: 2.25rem 1rem; }
-
-    /* Alignment */
-    .a-center .wrap { justify-items: center; text-align: center; }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .hero { background-attachment: fixed; }
-    }
-  </style>
 </header>
