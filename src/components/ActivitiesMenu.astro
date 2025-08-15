@@ -1,0 +1,77 @@
+---
+// Builds a dropdown list of links from files in /src/pages/activities/**.
+// Usage: <ActivitiesMenu label="Activities" />
+interface Item { url: string; label: string }
+
+const { label = 'Activities' } = Astro.props as { label?: string };
+
+// Eagerly import all activity pages; works for .astro, .md, .mdx
+const modules = import.meta.glob('../pages/activities/**/*.{astro,md,mdx}', { eager: true });
+
+const startCase = (s: string) => s
+  .split('-').join(' ')
+  .split('_').join(' ')
+  .split(' ')
+  .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+  .join(' ');
+
+function toRoute(file: string) {
+  let p = file;
+  const idx = p.lastIndexOf('/pages');
+  if (idx !== -1) p = p.slice(idx + 6);
+  const dot = p.lastIndexOf('.');
+  if (dot !== -1) p = p.slice(0, dot);
+  if (p.endsWith('/index')) p = p.slice(0, -('/index'.length)) + '/';
+  return p;
+}
+
+const toLabelFromRoute = (route: string) => {
+  const parts = route.split('/').filter(Boolean);
+  const last = parts[parts.length - 1] ?? 'Activities';
+  return startCase(last);
+};
+
+const items: Item[] = Object.entries(modules)
+  .map(([file, mod]: any) => {
+    const url = toRoute(file);
+    const label = mod?.frontmatter?.title || mod?.title || toLabelFromRoute(url);
+    return { url, label } as Item;
+  })
+  // hide the top-level /activities/ index in the dropdown (optional)
+  .filter((it) => it.url !== '/activities/')
+  .sort((a, b) => a.label.localeCompare(b.label));
+---
+<nav class="nav-activities" aria-label="Activities">
+  <details>
+    <summary>{label}</summary>
+    <ul>
+      {items.map((it) => (
+        <li><a href={it.url}>{it.label}</a></li>
+      ))}
+    </ul>
+  </details>
+  <style>
+    .nav-activities { position: relative; }
+    .nav-activities details { display: inline-block; position: relative; }
+    .nav-activities summary { list-style: none; cursor: pointer; user-select: none; }
+    .nav-activities summary::-webkit-details-marker { display: none; }
+
+    /* Button look */
+    .nav-activities summary { padding: .5rem .75rem; border: 1px solid #0b1220; border-radius: .5rem; font-weight: 600; }
+
+    /* Menu */
+    .nav-activities ul { position: absolute; margin: .5rem 0 0; padding: .5rem; border: 1px solid #e5e8f0; background: #fff; border-radius: .75rem; min-width: 14rem; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .nav-activities li { list-style: none; }
+    .nav-activities a { display: block; padding: .5rem .5rem; text-decoration: none; color: inherit; border-radius: .5rem; }
+    .nav-activities a:hover, .nav-activities a:focus { background: #f4f7ff; outline: none; }
+
+    /* Keep menu within viewport */
+    .nav-activities details { position: relative; }
+    .nav-activities details[open] > ul { right: 0; z-index: 10; }
+
+    @media (pointer: fine) {
+      /* Optional: open on hover/focus for desktop */
+      .nav-activities details:hover[open] > summary { }
+    }
+  </style>
+</nav>
