@@ -16,10 +16,16 @@ const pageTitle = title ? `${title} | ${site.name}` : site.name;
     <title>{pageTitle}</title>
   </head>
   <body class="m-0 min-h-full flex flex-col font-sans text-ink bg-bg-mid">
-    <header class="bg-white border-b border-soft relative z-10">
+    <header
+      id="site-header"
+      class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-soft
+         transition-all duration-300 ease-out
+         hover:opacity-100 hover:translate-y-0"
+    >
       <nav
         class="max-w-[72rem] mx-auto px-4 py-2 flex items-center justify-between"
       >
+        <!-- your existing left cluster -->
         <div class="flex items-center">
           <a href="/" class="flex items-center no-underline text-inherit">
             {
@@ -33,13 +39,14 @@ const pageTitle = title ? `${title} | ${site.name}` : site.name;
             }
             <span class="ml-2 font-bold text-xl">{site.name}</span>
           </a>
+          <!-- location/date to the right of title (outside anchor) -->
           <div class="ml-8 flex flex-col leading-tight text-xs text-slate-700">
             <span>{site.location}</span>
             <span>{site.date}</span>
           </div>
         </div>
 
-        <!-- Right cluster: nav menus -->
+        <!-- right cluster -->
         <div class="flex items-center gap-4">
           <NavMenu label="Registration" folder="registration" />
           <NavMenu label="Activities" folder="activities" />
@@ -60,3 +67,23 @@ const pageTitle = title ? `${title} | ${site.name}` : site.name;
     </footer>
   </body>
 </html>
+
+<script is:inline>
+  // Hide the navbar after a small scroll; show again on hover or when near top.
+  (function () {
+    const header = document.getElementById("site-header");
+    const HIDE_AFTER = 80; // px
+
+    function update() {
+      const shouldHide = window.scrollY > HIDE_AFTER;
+      header.classList.toggle("opacity-0", shouldHide);
+      header.classList.toggle("-translate-y-2", shouldHide);
+      header.classList.toggle("shadow-none", shouldHide);
+      header.classList.toggle("shadow-sm", !shouldHide);
+    }
+
+    // Run on load and on scroll
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+  })();
+</script>
