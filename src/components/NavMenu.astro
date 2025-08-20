@@ -7,6 +7,7 @@ const { label, folder } = Astro.props as { label: string; folder: string };
 const modulesMap = {
   activities: import.meta.glob('../pages/activities/**/*.{astro,md,mdx}', { eager: true }),
   'about-us': import.meta.glob('../pages/about-us/**/*.{astro,md,mdx}', { eager: true }),
+  registration: import.meta.glob('../pages/registration/**/*.{astro,md,mdx}', { eager: true }),
 } as Record<string, any>;
 const modules = modulesMap[folder] ?? {};
 const startCase = (s: string) =>
