@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import NavMenu from "../components/NavMenu.astro";
 import { site } from "../data/site";
+import Navbar from "../components/Navbar.astro";
 const { title } = Astro.props as { title?: string };
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 ---
@@ -18,41 +18,11 @@ const pageTitle = title ? `${title} | ${site.name}` : site.name;
   <body class="m-0 min-h-full flex flex-col font-sans text-ink bg-bg-mid">
     <header
       id="site-header"
-      class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-soft
+      class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-soft"
          transition-all duration-300 ease-out
          hover:opacity-100 hover:translate-y-0"
     >
-      <nav
-        class="max-w-[72rem] mx-auto px-4 py-2 flex items-center justify-between"
-      >
-        <!-- your existing left cluster -->
-        <div class="flex items-center">
-          <a href="/" class="flex items-center no-underline text-inherit">
-            {
-              site.logo && (
-                <img
-                  src={site.logo}
-                  alt={site.name + " logo"}
-                  class="h-8 w-8"
-                />
-              )
-            }
-            <span class="ml-2 font-bold text-xl">{site.name}</span>
-          </a>
-          <!-- location/date to the right of title (outside anchor) -->
-          <div class="ml-8 flex flex-col leading-tight text-xs text-slate-700">
-            <span>{site.location}</span>
-            <span>{site.date}</span>
-          </div>
-        </div>
-
-        <!-- right cluster -->
-        <div class="flex items-center gap-4">
-          <NavMenu label="Registration" folder="registration" />
-          <NavMenu label="Activities" folder="activities" />
-          <NavMenu label="About Us" folder="about-us" />
-        </div>
-      </nav>
+      <Navbar />
     </header>
     <main id="main" class="flex-1 mx-auto w-full">
       <slot />
