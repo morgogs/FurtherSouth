@@ -1,0 +1,30 @@
+---
+import { site } from "../data/site";
+import NavMenu from "./NavMenu.astro";
+---
+
+<nav class="max-w-[72rem] mx-auto px-4 py-2 flex items-center justify-between">
+  <!-- left cluster -->
+  <div class="flex items-center">
+    <a href="/" class="flex items-center no-underline text-inherit">
+      {
+        site.logo && (
+          <img src={site.logo} alt={site.name + " logo"} class="h-8 w-8" />
+        )
+      }
+      <span class="ml-2 font-bold text-xl">{site.name}</span>
+    </a>
+    <div class="ml-8 flex flex-col leading-tight text-xs text-slate-700">
+      <span>{site.location}</span>
+      <span>{site.date}</span>
+    </div>
+  </div>
+
+  <!-- right cluster -->
+  <div class="flex items-center gap-4">
+    {site.nav.map((it) => (
+      <NavMenu label={it.label} folder={it.folder} />
+    ))}
+  </div>
+</nav>
+
