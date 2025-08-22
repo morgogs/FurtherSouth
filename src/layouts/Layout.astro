@@ -15,19 +15,19 @@ const pageTitle = title ? `${title} | ${site.name}` : site.name;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body class="m-0 min-h-full flex flex-col font-sans text-ink bg-bg-mid">
+  <body class="m-0 flex min-h-full flex-col bg-bg-mid font-sans text-ink">
     <header
       id="site-header"
-      class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-soft transition-all duration-300 ease-out hover:opacity-100 hover:translate-y-0"
+      class="sticky top-0 z-50 border-b border-soft bg-white/95 backdrop-blur transition-all duration-300 ease-out hover:translate-y-0 hover:opacity-100"
     >
       <Navbar />
     </header>
-    <main id="main" class="flex-1 mx-auto w-full">
+    <main id="main" class="mx-auto w-full flex-1">
       <slot />
     </main>
 
-    <footer class="border-t border-soft text-muted py-4 px-4">
-      <div class="max-w-[72rem] mx-auto">
+    <footer class="border-t border-soft px-4 py-4 text-muted">
+      <div class="mx-auto max-w-[72rem]">
         © {new Date().getFullYear()}
         {site.name}
       </div>

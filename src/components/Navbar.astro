@@ -3,18 +3,18 @@ import { site } from "../data/site";
 import NavMenu from "./NavMenu.astro";
 ---
 
-<nav class="max-w-[72rem] mx-auto px-4 py-2 flex items-center justify-between">
+<nav class="mx-auto flex max-w-[72rem] items-center justify-between px-4 py-2">
   <!-- left cluster -->
   <div class="flex items-center">
-    <a href="/" class="flex items-center no-underline text-inherit">
+    <a href="/" class="flex items-center text-inherit no-underline">
       {
         site.logo && (
           <img src={site.logo} alt={site.name + " logo"} class="h-8 w-8" />
         )
       }
-      <span class="ml-2 font-bold text-xl">{site.name}</span>
+      <span class="ml-2 text-xl font-bold">{site.name}</span>
     </a>
-    <div class="ml-8 flex flex-col leading-tight text-xs text-slate-700">
+    <div class="ml-8 flex flex-col text-xs leading-tight text-slate-700">
       <span>{site.location}</span>
       <span>{site.date}</span>
     </div>
@@ -22,9 +22,6 @@ import NavMenu from "./NavMenu.astro";
 
   <!-- right cluster -->
   <div class="flex items-center gap-4">
-    {site.nav.map((it) => (
-      <NavMenu label={it.label} folder={it.folder} />
-    ))}
+    {site.nav.map((it) => <NavMenu label={it.label} folder={it.folder} />)}
   </div>
 </nav>
-

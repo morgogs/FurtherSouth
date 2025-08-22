@@ -54,15 +54,15 @@ const items: Item[] = Object.entries(modules)
 ---
 
 <nav class="relative" aria-label={label}>
-  <div class="group inline-block relative">
+  <div class="group relative inline-block">
     <button
       type="button"
-      class="flex items-center gap-1 cursor-pointer select-none px-3 py-2 border border-ink rounded-md font-semibold bg-white hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+      class="flex cursor-pointer select-none items-center gap-1 rounded-md border border-ink bg-white px-3 py-2 font-semibold hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
       aria-haspopup="menu"
     >
       {label}
       <svg
-        class="w-3 h-3 transition-transform group-hover:rotate-180"
+        class="h-3 w-3 transition-transform group-hover:rotate-180"
         viewBox="0 0 10 6"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -79,15 +79,14 @@ const items: Item[] = Object.entries(modules)
 
     <!-- Hidden by default; shown only while hovered -->
     <ul
-      class="absolute right-0 top-full p-2 border border-soft bg-white rounded-xl min-w-[14rem] shadow-lg z-20
-             hidden group-hover:block group-focus-within:block"
+      class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
       role="menu"
     >
       {
         items.map((it) => (
           <li class="list-none" role="none">
             <a
-              class="block px-3 py-2 no-underline text-inherit rounded-md hover:bg-soft focus:bg-soft outline-none"
+              class="block rounded-md px-3 py-2 text-inherit no-underline outline-none hover:bg-soft focus:bg-soft"
               href={it.url}
               role="menuitem"
             >

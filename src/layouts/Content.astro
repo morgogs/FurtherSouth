@@ -1,5 +1,5 @@
 ---
-import Layout from './Layout.astro';
+import Layout from "./Layout.astro";
 
 interface Props {
   title?: string; // document title
@@ -12,9 +12,13 @@ interface Props {
 // so we don't mix property access and lose type safety.
 type AstroProps = Props | { frontmatter: Props };
 const raw = Astro.props as AstroProps;
-const { title, heading = title, description } =
-  'frontmatter' in raw ? raw.frontmatter : raw;
+const {
+  title,
+  heading = title,
+  description,
+} = "frontmatter" in raw ? raw.frontmatter : raw;
 ---
+
 <Layout title={title ?? heading}>
   <article class="prose mx-auto">
     {heading && <h1 class="mb-4 text-3xl font-bold">{heading}</h1>}
