@@ -1,6 +1,7 @@
 ---
 layout: ../../layouts/Content.astro
 title: Venue
+sortIndex: 1
 ---
 
 This is a large, conference centre based hotel in the suburban south of Portsmouth, Hampshire, a place that hosts a wide variety of events and activities throughout the year within a range of different size and style rooms. We will only be using a small fraction of their ample space this year, but are already looking at options to expand into more in the future.

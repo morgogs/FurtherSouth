@@ -9,6 +9,7 @@ export const site = {
     { label: "Registration", folder: "registration" },
     { label: "Activities", folder: "activities" },
     { label: "About Us", folder: "about-us" },
+    { label: "Wyvern Events", folder: "wyvern-events" },
   ],
 };
 

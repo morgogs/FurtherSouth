@@ -2,6 +2,7 @@
 interface Item {
   url: string;
   label: string;
+  sortIndex: number;
 }
 const { label, folder } = Astro.props as { label: string; folder: string };
 
@@ -15,6 +16,12 @@ const modulesMap = {
   registration: import.meta.glob("../pages/registration/**/*.{astro,md,mdx}", {
     eager: true,
   }),
+  "wyvern-events": import.meta.glob(
+    "../pages/wyvern-events/**/*.{astro,md,mdx}",
+    {
+      eager: true,
+    },
+  ),
 } as Record<string, any>;
 
 const modules = modulesMap[folder] ?? {};
@@ -47,10 +54,11 @@ const items: Item[] = Object.entries(modules)
     const url = toRoute(file);
     const label =
       mod?.frontmatter?.title || mod?.title || toLabelFromRoute(url);
-    return { url, label } as Item;
+    const sortIndex = mod?.frontmatter?.sortIndex as number;
+    return { url, label, sortIndex } as Item;
   })
   .filter((it) => it.url !== `/${folder}/`)
-  .sort((a, b) => a.label.localeCompare(b.label));
+  .sort((a, b) => a.sortIndex - b.sortIndex);
 ---
 
 <nav class="relative" aria-label={label}>
