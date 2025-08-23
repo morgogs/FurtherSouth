@@ -18,7 +18,44 @@ import logo from "../assets/logo.png";
     </div>
   </div>
   <!-- right cluster -->
-  <div class="flex items-center gap-4">
+  <div class="hidden items-center gap-4 md:flex">
     {site.nav.map((it) => <NavMenu label={it.label} folder={it.folder} />)}
   </div>
+  <button
+    id="mobile-menu-button"
+    class="p-2 md:hidden"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
 </nav>
+<div
+  id="mobile-menu"
+  class="hidden flex-col gap-2 border-t border-soft px-4 pb-4 md:hidden"
+>
+  {site.nav.map((it) => <NavMenu mobile label={it.label} folder={it.folder} />)}
+</div>
+<script is:inline>
+  document
+    .getElementById("mobile-menu-button")
+    ?.addEventListener("click", function () {
+      const expanded = this.getAttribute("aria-expanded") === "true";
+      this.setAttribute("aria-expanded", String(!expanded));
+      document
+        .getElementById("mobile-menu")
+        ?.classList.toggle("hidden", expanded);
+    });
+</script>
