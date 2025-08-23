@@ -58,4 +58,13 @@ import logo from "../assets/logo.png";
         .getElementById("mobile-menu")
         ?.classList.toggle("hidden", expanded);
     });
+  document.querySelectorAll("button[data-nav-toggle]").forEach((btn) => {
+    const listId = btn.getAttribute("aria-controls");
+    const list = listId && document.getElementById(listId);
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      list?.classList.toggle("hidden", expanded);
+    });
+  });
 </script>

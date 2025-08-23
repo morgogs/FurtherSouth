@@ -7,7 +7,11 @@ interface Item {
   sortIndex: number;
 }
 
-const { label, folder, mobile = false } = Astro.props as {
+const {
+  label,
+  folder,
+  mobile = false,
+} = Astro.props as {
   label: string;
   folder: string;
   mobile?: boolean;
@@ -31,89 +35,52 @@ const toggleId = `toggle-${folder}`;
 const listId = `mobile-${folder}`;
 ---
 
-{mobile ? (
-  <nav aria-label={label} class="w-full">
-    <div class="flex items-center justify-between">
-      {
-        indexHref ? (
-          <a href={indexHref} class="py-2 font-semibold text-inherit no-underline">
+{
+  mobile ? (
+    <nav aria-label={label} class="w-full">
+      <div class="flex items-center justify-between">
+        {indexHref ? (
+          <a
+            href={indexHref}
+            class="py-2 font-semibold text-inherit no-underline"
+          >
             {label}
           </a>
         ) : (
           <span class="py-2 font-semibold">{label}</span>
-        )
-      }
-      {items.length > 0 && (
-        <button
-          id={toggleId}
-          class="p-2"
-          type="button"
-          aria-expanded="false"
-          aria-controls={listId}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        )}
+        {items.length > 0 && (
+          <button
+            id={toggleId}
+            class="p-2"
+            type="button"
+            aria-expanded="false"
+            aria-controls={listId}
+            data-nav-toggle
           >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      )}
-    </div>
-    {items.length > 0 && (
-      <ul id={listId} class="ml-4 hidden flex-col">
-        {items.map((it) => (
-          <li class="list-none">
-            <a
-              class="block rounded-md px-3 py-2 text-inherit no-underline hover:bg-soft"
-              href={it.url}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {it.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )}
-    <script is:inline>
-      const toggle = document.getElementById("${toggleId}");
-      const list = document.getElementById("${listId}");
-      if (toggle && list) {
-        toggle.addEventListener("click", function () {
-          const expanded = this.getAttribute("aria-expanded") === "true";
-          this.setAttribute("aria-expanded", String(!expanded));
-          list.classList.toggle("hidden", expanded);
-        });
-      }
-    </script>
-  </nav>
-) : (
-  <nav class="relative" aria-label={label}>
-    <div class="group relative inline-flex items-center gap-1">
-      {
-        indexHref ? (
-          <a
-            href={indexHref}
-            class="rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
-          >
-            {label}
-          </a>
-        ) : (
-          <span class="rounded-md px-3 py-2 font-semibold">{label}</span>
-        )
-      }
-
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
       {items.length > 0 && (
-        <ul
-          id={`menu-${folder}`}
-          class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
-        >
+        <ul id={listId} class="ml-4 hidden flex-col">
           {items.map((it) => (
             <li class="list-none">
               <a
-                class="block rounded-md px-3 py-2 text-inherit no-underline outline-none hover:bg-soft focus:bg-soft"
+                class="block rounded-md px-3 py-2 text-inherit no-underline hover:bg-soft"
                 href={it.url}
               >
                 {it.label}
@@ -122,6 +89,39 @@ const listId = `mobile-${folder}`;
           ))}
         </ul>
       )}
-    </div>
-  </nav>
-)}
+    </nav>
+  ) : (
+    <nav class="relative" aria-label={label}>
+      <div class="group relative inline-flex items-center gap-1">
+        {indexHref ? (
+          <a
+            href={indexHref}
+            class="rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+          >
+            {label}
+          </a>
+        ) : (
+          <span class="rounded-md px-3 py-2 font-semibold">{label}</span>
+        )}
+
+        {items.length > 0 && (
+          <ul
+            id={`menu-${folder}`}
+            class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
+          >
+            {items.map((it) => (
+              <li class="list-none">
+                <a
+                  class="block rounded-md px-3 py-2 text-inherit no-underline outline-none hover:bg-soft focus:bg-soft"
+                  href={it.url}
+                >
+                  {it.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </nav>
+  )
+}
