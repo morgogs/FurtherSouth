@@ -9,41 +9,46 @@ interface Item {
 
 const { label, folder } = Astro.props as { label: string; folder: string };
 
-// Grab just the entries in this folder (e.g. "registration/*")
-const entries = await getCollection("pages", (page) =>
-  page.id.startsWith(`${folder}/`),
-);
+const pages = await getCollection("pages", (e) => e.id.startsWith(`${folder}`));
 
-const items: Item[] = entries
-  .map((e) => ({
-    url: `/${e.id}/`,
-    label: e.data.title,
-    sortIndex: e.data.sortIndex,
+const indexEntry = pages.find((page) => page.id === folder);
+const indexHref = indexEntry ? `/${folder}/` : undefined;
+
+const items: Item[] = pages
+  // .filter((page) => page.id !== folder) // hide the index page in the dropdown
+  .map((page) => ({
+    url: `/${page.id}/`,
+    label: page.data.title,
+    sortIndex: page.data.sortIndex,
   }))
   .sort((a, b) => a.sortIndex - b.sortIndex);
 ---
 
 <nav class="relative" aria-label={label}>
-  <div class="group relative inline-block">
-    <button
-      type="button"
-      class="flex cursor-pointer select-none items-center gap-1 rounded-md border border-ink bg-white px-3 py-2 font-semibold hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
-      aria-haspopup="menu"
-    >
-      {label}
-    </button>
+  <div class="group relative inline-flex items-center gap-1">
+    {
+      indexHref ? (
+        <a
+          href={indexHref}
+          class="rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+        >
+          {label}
+        </a>
+      ) : (
+        <span class="rounded-md px-3 py-2 font-semibold">{label}</span>
+      )
+    }
 
     <ul
+      id={`menu-${folder}`}
       class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
-      role="menu"
     >
       {
         items.map((it) => (
-          <li class="list-none" role="none">
+          <li class="list-none">
             <a
               class="block rounded-md px-3 py-2 text-inherit no-underline outline-none hover:bg-soft focus:bg-soft"
               href={it.url}
-              role="menuitem"
             >
               {it.label}
             </a>

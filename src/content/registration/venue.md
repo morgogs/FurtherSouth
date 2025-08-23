@@ -13,3 +13,5 @@ As the convention continues to grow in popularity, we are in discussion to expan
 As well, we have access to use of a large lounge and relaxation area spreading through the spaces between these rooms, where guests can hang out, show off fursuits and meet friends.
 
 We are also able to make a number of bedrooms within the site available to attendees at a low rate, these will be available to book through most of the registration opening time, though the venue does ask that we confirm numbers some weeks ahead of time, so make sure your registration there is completed, including any room share arrangements.
+
+![Image of Southsea](https://furthersouth.uk/wp-content/uploads/2025/02/southsea-overview.jpg)

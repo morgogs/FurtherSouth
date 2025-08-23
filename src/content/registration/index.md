@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Content.astro
-title: Registration
+title: "Registration Details"
 sortIndex: 0
 ---
 
@@ -22,6 +22,6 @@ Registration for 2026 will be launching later this year, around September. Watch
 
 The link below will take you to our Civet Solutions hosted registration portal. Here, you can enter your personal details, choose your options and make your payment all in one place. Payments are processed via the Stripe Payment Service, which runs off your credit/debit card numbers. All details are securely stored and processed on servers our team has no access to.
 
-### [Register Now](https://reg.furthersouth.uk/kiosk/furthersouth)
-
 The form saves all of your details so you can start now and come back later. It also saves your entries from one year to the next, saving you time when you want to come back and join us again in 2026
+
+## [Register Now](https://reg.furthersouth.uk/kiosk/furthersouth)

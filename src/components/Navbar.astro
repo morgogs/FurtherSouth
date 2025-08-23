@@ -2,14 +2,14 @@
 import { Image } from "astro:assets";
 import { site } from "../data/site";
 import NavMenu from "./NavMenu.astro";
-import logo from '../assets/logo.png'
+import logo from "../assets/logo.png";
 ---
 
 <nav class="mx-auto flex max-w-[72rem] items-center justify-between px-4 py-2">
   <!-- left cluster -->
   <div class="flex items-center">
     <a href="/" class="flex items-center text-inherit no-underline">
-      <Image src={logo} alt="The FurtherSouth logo" width=50 height=50 />
+      <Image src={logo} alt="The FurtherSouth logo" width="50" height="50" />
       <span class="ml-2 text-xl font-bold">{site.name}</span>
     </a>
     <div class="ml-8 flex flex-col text-xs leading-tight text-slate-700">
@@ -17,7 +17,6 @@ import logo from '../assets/logo.png'
       <span>{site.date}</span>
     </div>
   </div>
-
   <!-- right cluster -->
   <div class="flex items-center gap-4">
     {site.nav.map((it) => <NavMenu label={it.label} folder={it.folder} />)}
