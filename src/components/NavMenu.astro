@@ -38,56 +38,78 @@ const listId = `mobile-${folder}`;
 {
   mobile ? (
     <nav aria-label={label} class="w-full">
-      <div class="flex items-center justify-between">
-        {indexHref ? (
-          <a
-            href={indexHref}
-            class="py-2 font-semibold text-inherit no-underline"
-          >
-            {label}
-          </a>
-        ) : (
-          <span class="py-2 font-semibold">{label}</span>
-        )}
-        {items.length > 0 && (
-          <button
-            id={toggleId}
-            class="p-2"
-            type="button"
-            aria-expanded="false"
-            aria-controls={listId}
-            data-nav-toggle
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+      {items.length > 0 ? (
+        <>
+          <div class="flex items-center gap-2">
+            <button
+              id={toggleId}
+              class="flex flex-1 items-center justify-between py-2 font-semibold"
+              type="button"
+              aria-expanded="false"
+              aria-controls={listId}
+              data-nav-toggle
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-        )}
-      </div>
-      {items.length > 0 && (
-        <ul id={listId} class="ml-4 hidden flex-col">
-          {items.map((it) => (
-            <li class="list-none">
-              <a
-                class="block rounded-md px-3 py-2 text-inherit no-underline hover:bg-soft"
-                href={it.url}
+              <span>{label}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                {it.label}
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            {indexHref && (
+              <a
+                href={indexHref}
+                class="p-2 text-inherit no-underline"
+                aria-label={`Go to ${label}`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4-4 4m0 0H3m14-4H3"
+                  />
+                </svg>
               </a>
-            </li>
-          ))}
-        </ul>
+            )}
+          </div>
+          <ul id={listId} class="ml-4 hidden flex-col">
+            {items.map((it) => (
+              <li class="list-none">
+                <a
+                  class="block rounded-md px-3 py-2 text-inherit no-underline hover:bg-soft"
+                  href={it.url}
+                >
+                  {it.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : indexHref ? (
+        <a
+          href={indexHref}
+          class="block py-2 font-semibold text-inherit no-underline"
+        >
+          {label}
+        </a>
+      ) : (
+        <span class="block py-2 font-semibold">{label}</span>
       )}
     </nav>
   ) : (
