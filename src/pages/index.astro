@@ -2,16 +2,13 @@
 // src/pages/index.astro
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
+import background from "../assets/background.png";
 ---
 
 <Layout title="Further South">
   <section class="hero">
     <div class="hero-image">
-      <Image
-        src="https://furthersouth.uk/wp-content/uploads/2025/04/Further_South-dates-2-scaled.png"
-        alt="Further South Mascot"
-        inferSize
-      />
+      <Image src={background} alt="Further South Mascot" layout="full-width" />
     </div>
 
     <div class="info">
