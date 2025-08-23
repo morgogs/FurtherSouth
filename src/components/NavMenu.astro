@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { ArrowRight, ChevronDown } from "lucide-astro";
 
 interface Item {
   url: string;
@@ -50,20 +51,7 @@ const listId = `mobile-${folder}`;
               data-nav-toggle
             >
               <span>{label}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              <ChevronDown class="h-5 w-5" />
             </button>
             {indexHref && (
               <a
@@ -71,20 +59,7 @@ const listId = `mobile-${folder}`;
                 class="p-2 text-inherit no-underline"
                 aria-label={`Go to ${label}`}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8l4 4-4 4m0 0H3m14-4H3"
-                  />
-                </svg>
+                <ArrowRight class="h-5 w-5" />
               </a>
             )}
           </div>
