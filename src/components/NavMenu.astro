@@ -3,19 +3,19 @@ import { getCollection } from "astro:content";
 import { ChevronDown } from "lucide-astro";
 
 interface Item {
-  url: string;
-  label: string;
-  sortIndex: number;
+	url: string;
+	label: string;
+	sortIndex: number;
 }
 
 const {
-  label,
-  folder,
-  mobile = false,
+	label,
+	folder,
+	mobile = false,
 } = Astro.props as {
-  label: string;
-  folder: string;
-  mobile?: boolean;
+	label: string;
+	folder: string;
+	mobile?: boolean;
 };
 
 const pages = await getCollection("pages", (e) => e.id.startsWith(`${folder}`));
@@ -24,102 +24,104 @@ const indexEntry = pages.find((page) => page.id === folder);
 const indexHref = indexEntry ? `/${folder}/` : undefined;
 
 const items: Item[] = pages
-  .filter((page) => page.id !== folder)
-  .map((page) => ({
-    url: `/${page.id}/`,
-    label: page.data.title,
-    sortIndex: page.data.sortIndex,
-  }))
-  .sort((a, b) => a.sortIndex - b.sortIndex);
+	//   .filter((page) => page.id !== folder)
+	.map((page) => ({
+		url: `/${page.id}/`,
+		label: page.data.title,
+		sortIndex: page.data.sortIndex,
+	}))
+	.sort((a, b) => a.sortIndex - b.sortIndex);
 
 const listId = `mobile-${folder}`;
 ---
 
 {
-  mobile ? (
-    <nav aria-label={label} class="w-full">
-      {items.length > 0 ? (
-        <>
-          <div class="flex items-center gap-2">
-            {indexHref ? (
-              <a
-                href={indexHref}
-                class="flex flex-1 items-center rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft"
-              >
-                {label}
-              </a>
-            ) : (
-              <span class="flex flex-1 items-center rounded-md px-3 py-2 font-semibold">
-                {label}
-              </span>
-            )}
-            <button
-              class="p-2"
-              type="button"
-              aria-expanded="false"
-              aria-controls={listId}
-              data-nav-toggle
-              aria-label={`Toggle ${label} menu`}
-            >
-              <ChevronDown class="h-5 w-5" />
-            </button>
-          </div>
-          <ul id={listId} class="ml-4 hidden flex-col">
-            {items.map((it) => (
-              <li class="list-none">
-                <a
-                  class="block rounded-md px-3 py-2 text-inherit no-underline hover:bg-soft"
-                  href={it.url}
-                >
-                  {it.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : indexHref ? (
-        <a
-          href={indexHref}
-          class="block py-2 font-semibold text-inherit no-underline hover:bg-soft"
-        >
-          {label}
-        </a>
-      ) : (
-        <span class="block py-2 font-semibold">{label}</span>
-      )}
-    </nav>
-  ) : (
-    <nav class="relative" aria-label={label}>
-      <div class="group relative inline-flex items-center gap-1">
-        {indexHref ? (
-          <a
-            href={indexHref}
-            class="rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
-          >
-            {label}
-          </a>
-        ) : (
-          <span class="rounded-md px-3 py-2 font-semibold">{label}</span>
-        )}
+	mobile ? (
+		<nav aria-label={label} class="w-full">
+			{items.length > 0 ? (
+				<>
+					<div class="flex items-center gap-2">
+						{indexHref ? (
+							<a
+								href={indexHref}
+								class="flex flex-1 items-center rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft"
+							>
+								{label}
+							</a>
+						) : (
+							<span class="flex flex-1 items-center rounded-md px-3 py-2 font-semibold">
+								{label}
+							</span>
+						)}
+						<button
+							class="p-2"
+							type="button"
+							aria-expanded="false"
+							aria-controls={listId}
+							data-nav-toggle
+							aria-label={`Toggle ${label} menu`}
+						>
+							<ChevronDown class="h-5 w-5" />
+						</button>
+					</div>
+					<ul id={listId} class="ml-4 hidden flex-col">
+						{items.map((it) => (
+							<li class="list-none">
+								<a
+									class="block rounded-md px-3 py-2 text-inherit no-underline hover:bg-soft"
+									href={it.url}
+								>
+									{it.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				</>
+			) : indexHref ? (
+				<a
+					href={indexHref}
+					class="block py-2 font-semibold text-inherit no-underline hover:bg-soft"
+				>
+					{label}
+				</a>
+			) : (
+				<span class="block py-2 font-semibold">{label}</span>
+			)}
+		</nav>
+	) : (
+		<nav class="relative" aria-label={label}>
+			<div class="group relative inline-flex items-center gap-1">
+				{indexHref ? (
+					<a
+						href={indexHref}
+						class="rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+					>
+						{label}
+					</a>
+				) : (
+					<span class="rounded-md px-3 py-2 font-semibold">
+						{label}
+					</span>
+				)}
 
-        {items.length > 0 && (
-          <ul
-            id={`menu-${folder}`}
-            class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
-          >
-            {items.map((it) => (
-              <li class="list-none">
-                <a
-                  class="block rounded-md px-3 py-2 text-inherit no-underline outline-none hover:bg-soft focus:bg-soft"
-                  href={it.url}
-                >
-                  {it.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </nav>
-  )
+				{items.length > 0 && (
+					<ul
+						id={`menu-${folder}`}
+						class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
+					>
+						{items.map((it) => (
+							<li class="list-none">
+								<a
+									class="block rounded-md px-3 py-2 text-inherit no-underline outline-none hover:bg-soft focus:bg-soft"
+									href={it.url}
+								>
+									{it.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				)}
+			</div>
+		</nav>
+	)
 }
