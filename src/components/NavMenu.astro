@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { ArrowRight, ChevronDown } from "lucide-astro";
+import { ChevronDown } from "lucide-astro";
 
 interface Item {
   url: string;
@@ -32,7 +32,6 @@ const items: Item[] = pages
   }))
   .sort((a, b) => a.sortIndex - b.sortIndex);
 
-const toggleId = `toggle-${folder}`;
 const listId = `mobile-${folder}`;
 ---
 
@@ -42,26 +41,28 @@ const listId = `mobile-${folder}`;
       {items.length > 0 ? (
         <>
           <div class="flex items-center gap-2">
+            {indexHref ? (
+              <a
+                href={indexHref}
+                class="flex flex-1 items-center rounded-md px-3 py-2 font-semibold text-inherit no-underline hover:bg-soft"
+              >
+                {label}
+              </a>
+            ) : (
+              <span class="flex flex-1 items-center rounded-md px-3 py-2 font-semibold">
+                {label}
+              </span>
+            )}
             <button
-              id={toggleId}
-              class="flex flex-1 items-center justify-between py-2 font-semibold"
+              class="p-2"
               type="button"
               aria-expanded="false"
               aria-controls={listId}
               data-nav-toggle
+              aria-label={`Toggle ${label} menu`}
             >
-              <span>{label}</span>
               <ChevronDown class="h-5 w-5" />
             </button>
-            {indexHref && (
-              <a
-                href={indexHref}
-                class="p-2 text-inherit no-underline"
-                aria-label={`Go to ${label}`}
-              >
-                <ArrowRight class="h-5 w-5" />
-              </a>
-            )}
           </div>
           <ul id={listId} class="ml-4 hidden flex-col">
             {items.map((it) => (
@@ -79,7 +80,7 @@ const listId = `mobile-${folder}`;
       ) : indexHref ? (
         <a
           href={indexHref}
-          class="block py-2 font-semibold text-inherit no-underline"
+          class="block py-2 font-semibold text-inherit no-underline hover:bg-soft"
         >
           {label}
         </a>
