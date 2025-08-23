@@ -27,6 +27,7 @@ import { Menu } from "lucide-astro";
     class="p-2 md:hidden"
     aria-expanded="false"
     aria-controls="mobile-menu"
+    aria-label="Open navigation menu"
   >
     <Menu class="h-6 w-6" />
   </button>
@@ -43,6 +44,10 @@ import { Menu } from "lucide-astro";
     ?.addEventListener("click", function () {
       const expanded = this.getAttribute("aria-expanded") === "true";
       this.setAttribute("aria-expanded", String(!expanded));
+      this.setAttribute(
+        "aria-label",
+        expanded ? "Open navigation menu" : "Close navigation menu",
+      );
       document
         .getElementById("mobile-menu")
         ?.classList.toggle("hidden", expanded);
