@@ -1,63 +1,25 @@
 ---
+import { getCollection } from "astro:content";
+
 interface Item {
   url: string;
   label: string;
   sortIndex: number;
 }
+
 const { label, folder } = Astro.props as { label: string; folder: string };
 
-const modulesMap = {
-  activities: import.meta.glob("../pages/activities/**/*.{astro,md,mdx}", {
-    eager: true,
-  }),
-  "about-us": import.meta.glob("../pages/about-us/**/*.{astro,md,mdx}", {
-    eager: true,
-  }),
-  registration: import.meta.glob("../pages/registration/**/*.{astro,md,mdx}", {
-    eager: true,
-  }),
-  "wyvern-events": import.meta.glob(
-    "../pages/wyvern-events/**/*.{astro,md,mdx}",
-    {
-      eager: true,
-    },
-  ),
-} as Record<string, any>;
+// Grab just the entries in this folder (e.g. "registration/*")
+const entries = await getCollection("pages", (page) =>
+  page.id.startsWith(`${folder}/`),
+);
 
-const modules = modulesMap[folder] ?? {};
-
-const startCase = (s: string) =>
-  s
-    .replace(/[-_]/g, " ")
-    .split(" ")
-    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
-    .join(" ");
-
-function toRoute(file: string) {
-  let p = file;
-  const idx = p.lastIndexOf("/pages");
-  if (idx !== -1) p = p.slice(idx + 6);
-  const dot = p.lastIndexOf(".");
-  if (dot !== -1) p = p.slice(0, dot);
-  if (p.endsWith("/index")) p = p.slice(0, -"/index".length) + "/";
-  return p;
-}
-
-const toLabelFromRoute = (route: string) => {
-  const parts = route.split("/").filter(Boolean);
-  const last = parts[parts.length - 1] ?? folder;
-  return startCase(last);
-};
-
-const items: Item[] = Object.entries(modules)
-  .map(([file, mod]: any) => {
-    const url = toRoute(file);
-    const label =
-      mod?.frontmatter?.title || mod?.title || toLabelFromRoute(url);
-    const sortIndex = mod?.frontmatter?.sortIndex as number;
-    return { url, label, sortIndex } as Item;
-  })
-  .filter((it) => it.url !== `/${folder}/`)
+const items: Item[] = entries
+  .map((e) => ({
+    url: `/${e.id}/`,
+    label: e.data.title,
+    sortIndex: e.data.sortIndex,
+  }))
   .sort((a, b) => a.sortIndex - b.sortIndex);
 ---
 
@@ -71,7 +33,6 @@ const items: Item[] = Object.entries(modules)
       {label}
     </button>
 
-    <!-- Hidden by default; shown only while hovered -->
     <ul
       class="absolute right-0 top-full z-20 hidden min-w-[14rem] rounded-xl border border-soft bg-white p-2 shadow-lg group-focus-within:block group-hover:block"
       role="menu"
