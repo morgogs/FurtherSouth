@@ -7,14 +7,14 @@ import background from "../assets/background.png";
 
 <Layout title="Further South">
   <section class="hero">
-    <h1>🌊 Further South 🦊</h1>
+    <h1>🌊<span class="title-text">Further South</span>🦊</h1>
     <div class="hero-image" aria-hidden="true">
       <Image src={background} alt="Further South Mascot" layout="full-width" />
     </div>
 
     <div class="info">
       <p class="lede">
-        An up-and-coming furry convention by the seaside — celebrating community,
+        <b> Further South </b> is an up-and-coming furry convention by the seaside — celebrating community,
         art, fursuits, and sun-soaked fun!
       </p>
       <p>
@@ -91,16 +91,34 @@ import background from "../assets/background.png";
 
   h1 {
     font-family: 'Pacifico', cursive;
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(1.5rem, 8vw, 5.5rem);
+    letter-spacing: clamp(2px, 0.8vw, 8px);
     margin: 0 0 .25rem 0;
-    letter-spacing: 0.5px;
-    background: linear-gradient(90deg, var(--sea-500), var(--palm));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+    text-align: center;
     display: inline-block;
+
+    /* Allow clean wrapping */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+
+    /* Gradient text */
+    background: linear-gradient(90deg, var(--sea-500) 0%, var(--palm) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    /* Outline + subtle glow */
+    text-shadow:
+      0 0 3px rgba(0, 0, 0, 0.4),
+      0 2px 6px rgba(0, 0, 0, 0.3);
+
     animation: bob 3.5s ease-in-out infinite;
+  }
+
+  .title-text {
+    -webkit-text-stroke: 0.5px white;
   }
 
   /* --- Info card --- */
@@ -138,7 +156,7 @@ import background from "../assets/background.png";
     font-size: clamp(1.5rem, 3vw, 2rem);
     color: var(--sun);
     margin: 1rem 0 0.25rem;
-    text-shadow: 0 1px 6px rgba(245, 158, 11, 0.35);
+    text-shadow: 0 0 1px black;
   }
 
   /* --- CTA button --- */
