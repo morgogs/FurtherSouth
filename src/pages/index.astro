@@ -7,20 +7,22 @@ import background from "../assets/background.png";
 
 <Layout title="Further South">
   <section class="hero">
-    <div class="hero-image">
+    <h1>🌊 Further South 🦊</h1>
+    <div class="hero-image" aria-hidden="true">
       <Image src={background} alt="Further South Mascot" layout="full-width" />
     </div>
 
     <div class="info">
-      <h1>Further South</h1>
-      <p>
-        Further South is an up and coming furry convention celebrating
-        community, art, fursuits, and fun!
+      <p class="lede">
+        An up-and-coming furry convention by the seaside — celebrating community,
+        art, fursuits, and sun-soaked fun!
       </p>
       <p>
-        Hosted in the heart of Portsmouth, surrounded by history, waves and sun
+        Hosted in the heart of Portsmouth, where historic docks meet rolling
+        waves and golden sunsets.
       </p>
-      <h2 class="font-bold">6–9 March</h2>
+      <h2 class="dates">March 6-9th</h2>
+
       <a
         class="register"
         href="https://reg.furthersouth.uk/kiosk/furthersouth"
@@ -28,78 +30,183 @@ import background from "../assets/background.png";
       >
         Register Now
       </a>
+
+      <ul class="highlights" aria-label="Convention highlights">
+        <li>Beach-themed dance &amp; DJ sets 🕺</li>
+        <li>Artist alley &amp; makers’ market 🎨</li>
+        <li>Fursuit promenade by the pier 🐾</li>
+      </ul>
     </div>
   </section>
 </Layout>
 
 <style>
+  /* --- Fonts (safe to @import in a page or move to a global CSS if you prefer) --- */
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap');
+
+  /* --- Theme tokens (tweak these to match branding exactly) --- */
+  :root {
+    --sand: #f8e7c7;
+    --sea-50: #e6f7ff;
+    --sea-300: #60a5fa;
+    --sea-500: #0ea5e9;  /* primary ocean */
+    --deep-sea: #0b3a7e;
+    --coral: #ff7a59;    /* accent */
+    --palm: #10b981;     /* secondary accent */
+    --sun: #f59e0b;      /* dates + sunny highlights */
+    --ink: #064e3b;      /* body text in card */
+    --glass: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.45);
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    --radius-lg: 1.25rem;
+  }
+
+  /* --- Page hero --- */
   .hero {
     min-height: 100vh;
     width: 100%;
     background: linear-gradient(
       to bottom,
-      #a7f3d0 0%,
-      #3b82f6 50%,
+      #a7f3d0 0%, 
+      #60a5fa 50%,
       #1e3a8a 100%
     );
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 2rem 1.25rem 3rem;
   }
+
   .hero-image {
     width: 100%;
-    margin: 2rem 0;
+    margin: 2rem 0 1rem;
+    max-width: 1400px;
   }
   .hero-image img {
     width: 100%;
     height: auto;
-    border-radius: 1rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
   }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(3rem, 8vw, 5rem);
+    margin: 0 0 .25rem 0;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, var(--sea-500), var(--palm));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+    display: inline-block;
+    animation: bob 3.5s ease-in-out infinite;
+  }
+
+  /* --- Info card --- */
   .info {
-    width: 100%;
-    max-width: 1200px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    line-height: 1.7;
+    width: 100%;  
+    max-width: 1100px;
+    background: linear-gradient(135deg, var(--glass), rgba(255, 255, 255, 0.55));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--glass-border);
     text-align: center;
     margin-top: 1rem;
+    box-shadow: var(--shadow);
+    color: var(--ink);
+    font-family: 'Quicksand', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    line-height: 1.8;
   }
+
+  .info .lede {
+    font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+    font-weight: 600;
+    margin: .5rem auto 0.5rem;
+    max-width: 70ch;
+  }
+
+  .info p {
+    margin: 0.5rem auto 0;
+    max-width: 78ch;
+  }
+
+  .info .dates {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--sun);
+    margin: 1rem 0 0.25rem;
+    text-shadow: 0 1px 6px rgba(245, 158, 11, 0.35);
+  }
+
+  /* --- CTA button --- */
   .register {
     display: inline-block;
-    font-size: 1.8rem; /* big text */
-    font-weight: 700; /* bold */
-    color: white; /* text color */
-    background: linear-gradient(
-      135deg,
-      #3b82f6,
-      #06b6d4
-    ); /* bright blue → turquoise */
-    padding: 1rem 3rem; /* large clickable area */
+    font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--sea-500), var(--palm));
+    padding: 0.9rem 2.25rem;
     border: none;
-    border-radius: 1rem; /* rounded corners */
+    border-radius: 999px;
     cursor: pointer;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      background 0.3s ease;
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      filter 0.18s ease;
     margin-top: 1rem;
+    text-decoration: none;
   }
   .register:hover {
-    transform: translateY(-3px); /* subtle lift */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
-    background: linear-gradient(
-      135deg,
-      #06b6d4,
-      #3b82f6
-    ); /* gradient swap for effect */
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+    filter: brightness(1.05);
   }
   .register:active {
-    transform: translateY(1px); /* pressed effect */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+  }
+  .register:focus-visible {
+    outline: 3px solid rgba(14, 165, 233, 0.5);
+    outline-offset: 3px;
+  }
+
+  /* --- Highlights --- */
+  .highlights {
+    margin: 1.25rem auto 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 900px;
+  }
+  .highlights li {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 0.5rem 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  /* --- Motion --- */
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-4px) rotate(1deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    h1 { animation: none; }
+    .register { transition: none; }
+  }
+
+  /* --- Small tweaks for very narrow screens --- */
+  @media (max-width: 420px) {
+    .highlights {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
