@@ -1,0 +1,42 @@
+name: Prettier (Astro + Tailwind)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "**/*.astro"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.json"
+      - "**/*.md"
+      - "**/*.mdx"
+      - "**/*.css"
+      - "**/*.html"
+      - ".prettierrc*"
+      - "package.json"
+      - "package-lock.json"
+      - "tailwind.config.*"
+      - "astro.config.*"
+  push:
+    branches: [main]
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prettier — check formatting (Astro + Tailwind)
+        run: npx prettier --check .

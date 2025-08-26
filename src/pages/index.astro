@@ -1,11 +1,105 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// src/pages/index.astro
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import background from "../assets/background.png";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Further South">
+  <section class="hero">
+    <div class="hero-image">
+      <Image src={background} alt="Further South Mascot" layout="full-width" />
+    </div>
+
+    <div class="info">
+      <h1>Further South</h1>
+      <p>
+        Further South is an up and coming furry convention celebrating
+        community, art, fursuits, and fun!
+      </p>
+      <p>
+        Hosted in the heart of Portsmouth, surrounded by history, waves and sun
+      </p>
+      <h2 class="font-bold">6–9 March</h2>
+      <a
+        class="register"
+        href="https://reg.furthersouth.uk/kiosk/furthersouth"
+        rel="noopener noreferrer"
+      >
+        Register Now
+      </a>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      #a7f3d0 0%,
+      #3b82f6 50%,
+      #1e3a8a 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+  .hero-image {
+    width: 100%;
+    margin: 2rem 0;
+  }
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+  .info {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.7;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .register {
+    display: inline-block;
+    font-size: 1.8rem; /* big text */
+    font-weight: 700; /* bold */
+    color: white; /* text color */
+    background: linear-gradient(
+      135deg,
+      #3b82f6,
+      #06b6d4
+    ); /* bright blue → turquoise */
+    padding: 1rem 3rem; /* large clickable area */
+    border: none;
+    border-radius: 1rem; /* rounded corners */
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.3s ease;
+    margin-top: 1rem;
+  }
+  .register:hover {
+    transform: translateY(-3px); /* subtle lift */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(
+      135deg,
+      #06b6d4,
+      #3b82f6
+    ); /* gradient swap for effect */
+  }
+  .register:active {
+    transform: translateY(1px); /* pressed effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+</style>
