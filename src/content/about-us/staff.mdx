@@ -4,6 +4,7 @@ sortIndex: 1
 ---
 
 import ImageParagraph from "../../components/ImageParagraph.astro";
+import placeholder from "../../assets/placeholder.svg";
 
 ### Meet the Staff
 
@@ -66,11 +67,7 @@ import ImageParagraph from "../../components/ImageParagraph.astro";
   </p>
 </ImageParagraph>
 
-<ImageParagraph
-  src="https://www.shutterstock.com/shutterstock/photos/1114445501/display_1500/stock-vector-blank-avatar-photo-place-holder-1114445501.jpg"
-  alt="Pun King"
-  side="right"
->
+<ImageParagraph src={placeholder} alt="Pun King" side="right">
   <p class="my-0">
     Pun King, game developer with long time experience at related events,
     regularly handling our social media, communications, note taking at meetings
@@ -141,11 +138,7 @@ import ImageParagraph from "../../components/ImageParagraph.astro";
   </p>
 </ImageParagraph>
 
-<ImageParagraph
-  src="https://www.shutterstock.com/shutterstock/photos/1114445501/display_1500/stock-vector-blank-avatar-photo-place-holder-1114445501.jpg"
-  alt="Bluegill"
-  side="right"
->
+<ImageParagraph src={placeholder} alt="Bluegill" side="right">
   <p class="my-0">
     Bluegill, our long time customer service experienced staff member, here to
     make sure things go smoothly for everyone and issues are dealt with
