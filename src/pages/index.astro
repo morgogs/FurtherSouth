@@ -3,6 +3,8 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import background from "../assets/background.png";
+import { Palette, Calendar, Info } from "lucide-astro";
+import RegisterButton from "../components/RegisterButton.astro";
 ---
 
 <Layout title="Further South">
@@ -19,47 +21,28 @@ import background from "../assets/background.png";
       </p>
       <p>
         Hosted in the heart of Portsmouth, where historic docks meet rolling
-        waves and golden sunsets.
+        waves and golden sunsets. Join us for our second year running and come make it down further south!
       </p>
-      <h2 class="dates">March 6-9th</h2>
+      <h2 class="dates">March 6th-9th</h2>
 
-      <a
-        class="register"
-        href="https://reg.furthersouth.uk/kiosk/furthersouth"
-        rel="noopener noreferrer"
-      >
-        Register Now
-      </a>
+      <RegisterButton />
 
-      <ul class="highlights" aria-label="Convention highlights">
-        <li>Beach-themed dance &amp; DJ sets 🕺</li>
-        <li>Artist alley &amp; makers’ market 🎨</li>
-        <li>Fursuit promenade by the pier 🐾</li>
-      </ul>
+      <div class="highlights" aria-label="Convention highlights">
+        <a href="/activities/marketplace/" class="highlight-button">
+          <Palette class="icon" /> Dealers Den & Art Panels
+        </a>
+        <a href="/activities/" class="highlight-button">
+          <Calendar class="icon" /> Events
+        </a>
+        <a href="/about-us/" class="highlight-button">
+          <Info class="icon" /> About the Convention
+        </a>  
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  /* --- Fonts (safe to @import in a page or move to a global CSS if you prefer) --- */
-  @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap');
-
-  /* --- Theme tokens (tweak these to match branding exactly) --- */
-  :root {
-    --sand: #f8e7c7;
-    --sea-50: #e6f7ff;
-    --sea-300: #60a5fa;
-    --sea-500: #0ea5e9;  /* primary ocean */
-    --deep-sea: #0b3a7e;
-    --coral: #ff7a59;    /* accent */
-    --palm: #10b981;     /* secondary accent */
-    --sun: #f59e0b;      /* dates + sunny highlights */
-    --ink: #064e3b;      /* body text in card */
-    --glass: rgba(255, 255, 255, 0.72);
-    --glass-border: rgba(255, 255, 255, 0.45);
-    --shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-    --radius-lg: 1.25rem;
-  }
 
   /* --- Page hero --- */
   .hero {
@@ -89,6 +72,7 @@ import background from "../assets/background.png";
     box-shadow: var(--shadow);
   }
 
+  /* --- Title --- */
   h1 {
     font-family: 'Pacifico', cursive;
     font-size: clamp(1.5rem, 8vw, 5.5rem);
@@ -159,56 +143,49 @@ import background from "../assets/background.png";
     text-shadow: 0 0 1px black;
   }
 
-  /* --- CTA button --- */
-  .register {
-    display: inline-block;
-    font-size: clamp(1.1rem, 2.6vw, 1.35rem);
-    font-weight: 700;
-    color: white;
-    background: linear-gradient(135deg, var(--sea-500), var(--palm));
-    padding: 0.9rem 2.25rem;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease,
-      filter 0.18s ease;
-    margin-top: 1rem;
-    text-decoration: none;
-  }
-  .register:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
-    filter: brightness(1.05);
-  }
-  .register:active {
-    transform: translateY(1px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
-  }
-  .register:focus-visible {
-    outline: 3px solid rgba(14, 165, 233, 0.5);
-    outline-offset: 3px;
-  }
-
   /* --- Highlights --- */
   .highlights {
-    margin: 1.25rem auto 0;
+    margin: 2rem auto 0; /* more spacing from the register button */
     padding: 0;
-    list-style: none;
     display: grid;
     gap: 0.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    max-width: 900px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    max-width: 800px;
   }
-  .highlights li {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid var(--glass-border);
-    border-radius: 999px;
-    padding: 0.5rem 0.9rem;
+
+  .highlight-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, background 0.15s ease;
+    min-width: 15rem;
+    width: fit-content;
+    margin: 0.25rem auto;
+  }
+
+  .highlight-button:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .highlight-button:active {
+    transform: translateY(1px);
+  }
+
+  .highlight-button .icon {
+    width: 18px;
+    height: 18px;
+    color: var(--sea-500);
   }
 
   /* --- Motion --- */
@@ -222,7 +199,7 @@ import background from "../assets/background.png";
   }
 
   /* --- Small tweaks for very narrow screens --- */
-  @media (max-width: 420px) {
+  @media (max-width: 900px) {
     .highlights {
       grid-template-columns: 1fr;
     }
