@@ -10,35 +10,37 @@
 <style>
   .register {
     display: inline-block;
-    font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+    font-size: clamp(1.4rem, 3vw, 1.75rem); /* Bigger text */
     font-weight: 700;
     color: white;
     background: linear-gradient(135deg, var(--sea-500), var(--palm));
-    padding: 0.9rem 2.25rem;
+    padding: 1.2rem 3rem; /* Taller and wider button */
     border: none;
     border-radius: 999px;
     cursor: pointer;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3); /* Slightly bigger shadow */
     transition:
       transform 0.18s ease,
       box-shadow 0.18s ease,
       filter 0.18s ease;
-    margin: 1rem auto;
+    margin: 1.5rem auto;
     width: fit-content;
     text-decoration: none;
-    max-width: 15rem;
+    max-width: 20rem; /* Let it stretch more */
     display: block;
   }
 
   .register:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
     filter: brightness(1.05);
   }
+
   .register:active {
     transform: translateY(1px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
   }
+
   .register:focus-visible {
     outline: 3px solid rgba(14, 165, 233, 0.5);
     outline-offset: 3px;
