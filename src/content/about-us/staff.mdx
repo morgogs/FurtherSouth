@@ -4,7 +4,9 @@ sortIndex: 1
 ---
 
 import ImageParagraph from "../../components/ImageParagraph.astro";
-import placeholder from "../../assets/placeholder.svg";
+import placeholder from "@assets/placeholder.svg";
+import liamm from "@assets/liamm.jpg";
+import morgan from "@assets/morgan.png";
 
 ### Meet the Staff
 
@@ -72,6 +74,23 @@ import placeholder from "../../assets/placeholder.svg";
     Pun King, game developer with long time experience at related events,
     regularly handling our social media, communications, note taking at meetings
     and other administration work
+  </p>
+</ImageParagraph>
+
+<ImageParagraph src={liamm} alt="Liamm" side="left">
+  <p class="my-0">
+    Liamm, a web developer, budding DJ, and industry leading mouse catcher based
+    in London with ties to Scotland has been involved with the fandom since high
+    school, and is responsible for building the website you're reading right
+    now!
+  </p>
+</ImageParagraph>
+
+<ImageParagraph src={morgan} alt="Morgan" side="right">
+  <p class="my-0">
+    Morgan, a web developer by day, eepy fawn by night, and consistently a big
+    dumb durr based in Glasgow was recruited by Liamm; both into the fandom and
+    to help build the site.
   </p>
 </ImageParagraph>
 
