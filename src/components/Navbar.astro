@@ -10,7 +10,13 @@ import { Menu } from "lucide-astro";
   <!-- left cluster -->
   <div class="flex items-center">
     <a href="/" class="flex items-center text-inherit no-underline">
-      <Image src={logo} alt="The FurtherSouth logo" width="50" height="50" />
+      <Image
+        src={logo}
+        alt="The FurtherSouth logo"
+        width="50"
+        height="50"
+        densities={[1, 1.5, 2]}
+      />
       <span class="ml-2 text-xl font-bold">{site.name}</span>
     </a>
     <div class="ml-8 flex flex-col text-xs leading-tight text-slate-700">
