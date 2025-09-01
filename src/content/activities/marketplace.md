@@ -13,11 +13,13 @@ We will also be offering up space for enjoying drawing, writing or various other
 Welcome to the Further South Art Show! This is your chance to showcase your creations, whether they’re artworks, crafts, or unique items, for everyone to enjoy—and possibly purchase in our charity auction.
 
 ### [Art Show Signup](https://docs.google.com/forms/d/e/1FAIpQLSf3oSHV79ceZDWLsDE320nfzsmjfwG0XPJe6c2qgtZXid_9EA/viewform)
+
 #
+
 ## Dealers Den
 
 Welcome to the Further South Dealers Den! This is your chance to sell your art, creations and any other furry related items. If you are interested in a stall at the Dealers Den for the upcoming convention, just fill out this form and we'll get back to you, subject to manual approval. All spaces come with a £5 fee per table, payable after approval.
 
-Dealers slots will be confirmed before the close of registration. 
+Dealers slots will be confirmed before the close of registration.
 
 ### [Dealers Den Signup](https://docs.google.com/forms/d/e/1FAIpQLSfs4bc3eAE2Cb-T3-iayuVH61bteQpFLbb7z5G17WKhTJsF4g/viewform)
