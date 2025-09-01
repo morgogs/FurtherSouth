@@ -20,7 +20,7 @@ const {
 ---
 
 <Layout title={title ?? heading}>
-  <article class="prose mx-auto max-w-[48rem] px-4 pb-4 md:px-0">
+  <article class="prose mx-auto max-w-[48rem] px-4 pb-4 prose-h2:mt-8 md:px-0">
     {heading && <h1 class="my-4 text-3xl font-bold">{heading}</h1>}
     {description && <p class="mb-8 text-lg text-muted">{description}</p>}
     <slot />
